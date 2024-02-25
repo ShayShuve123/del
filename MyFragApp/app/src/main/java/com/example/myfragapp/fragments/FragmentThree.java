@@ -21,6 +21,7 @@ import com.example.myfragapp.classes.CustomerAdapter;
 import com.example.myfragapp.classes.Ingredient;
 
 import java.util.ArrayList;
+import com.example.myfragapp.classes.IngredientsData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,8 +76,18 @@ public class FragmentThree extends Fragment {
     private EditText searchEditText;
 
     //will give the ability of the recyclerView to move from up to down
-    private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+    private LinearLayoutManager linearLayoutManager ;
     private CustomerAdapter adapter;
+
+    private void filter(String text) {
+        ArrayList<Ingredient> filteredList = new ArrayList<>();
+        for (Ingredient item : dataset) {
+            if (item.getIngredientName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList); // Update adapter with filtered list
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -98,22 +109,24 @@ public class FragmentThree extends Fragment {
         searchEditText = view.findViewById(R.id.editTextSearch);//find the searchText(id:editTextText) for using
 
         dataset=new ArrayList<>();
+        linearLayoutManager= new LinearLayoutManager(getContext()); //will give the ability of the recyclerView to move from up to down
+
 
         recyclerView.setLayoutManager(linearLayoutManager);//set recyclerView to move from up to down
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        for(int i=0; i <IngredientsData.drawableArray.length; i++){
+        for(int i=0; i <IngredientsData.ingredientAmountArray.length; i++){
             dataset.add(new Ingredient(
-                    IngredientsData.nameArray[i],
-                    IngredientsData.descriptionArray[i],
-                    IngredientsData.drawableArray[i]
+                    IngredientsData.ingredientNameArray[i],
+                    IngredientsData.ingredientPriceArray[i],
+                    IngredientsData.ingredientImageArray[i]
             ) );
         }
 
-
-        adapter=new CustomeAdapter(dataset);
+        adapter=new CustomerAdapter(dataset);
         recyclerView.setAdapter(adapter);
         //add the option of searching
+
 
         // Set up TextWatcher for EditText
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -130,19 +143,6 @@ public class FragmentThree extends Fragment {
                 filter(s.toString()); // Call filter method when text changes
             }
         });
-
-        private void filter(String text) {
-            ArrayList<DataModel> filteredList = new ArrayList<>();
-            for (DataModel item : dataset) {
-                if (item.getCharacterName().toLowerCase().contains(text.toLowerCase())) {
-                    filteredList.add(item);
-                }
-            }
-            adapter.filterList(filteredList); // Update adapter with filtered list
-        }
-
-
-
 
         return view;
 

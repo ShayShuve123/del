@@ -16,7 +16,7 @@ import com.example.myfragapp.R;
 
 import java.util.ArrayList;
 
-public abstract class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyViewHolder> {
+public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyViewHolder> {
 
     ArrayList<Ingredient> dataset;//arr for the recycler view
 
@@ -58,7 +58,7 @@ public abstract class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdap
         //Content of the card,for using
         public MyViewHolder(View itemView) {
             super(itemView);
-            textIngredientName = itemView.findViewById(R.id.textViewIngredientName);
+            textIngredientName = itemView.findViewById(R.id.textViewIngredientName); //textViewIngredientName
             textIngredientPrice = itemView.findViewById(R.id.textViewIngredientPrice);
             IngredientImage = itemView.findViewById(R.id.imageView);
             textIngredientAmount = itemView.findViewById(R.id.quantityTextView);
@@ -81,13 +81,16 @@ public abstract class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomerAdapter.MyViewHolder holder, int position) {//in the back have a loop for the object[i]==position,paas all the arr
+    public void onBindViewHolder(@NonNull CustomerAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {//in the back have a loop for the object[i]==position,paas all the arr
+
+        // Ensure position is within the bounds of the filteredList
         Ingredient currentItem = filteredList.get(position);//for the searching
         //print all what in arr
         holder.textIngredientName.setText(currentItem.getIngredientName());
-        holder.textIngredientPrice.setText(currentItem.getIngredientPrice());
+        holder.textIngredientPrice.setText(String.valueOf(currentItem.getIngredientPrice()));
         holder.IngredientImage.setImageResource(currentItem.getIngredientImage());
-        holder.textIngredientAmount.setText(currentItem.getIngredientAmount());
+        holder.textIngredientAmount.setText(String.valueOf(currentItem.getIngredientAmount()));
+        //holder.textIngredientAmount.setText(currentItem.getIngredientAmount());
 
         // Adding click listener to the itemView for a specific Ingredient
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +102,8 @@ public abstract class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdap
                 Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show(); // Show the Toast message
             }
         });
+
+
 
         //+ btn
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
