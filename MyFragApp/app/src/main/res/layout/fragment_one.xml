@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.FragmentOne">
+
+    <TextView
+        android:id="@+id/textViewSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="11"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Sign up" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextNameS"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:layout_weight="2"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Enter User Name:"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextphoneS"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:layout_weight="2"
+            android:backgroundTint="#E1CECE"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Enter phone Number:"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextPasswordS"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="2"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Enter Password:"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btnSingUp2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="60dp"
+            android:layout_weight="2"
+            android:backgroundTint="#E91E63"
+            android:gravity="center"
+            android:text="Sign up" />
+    </LinearLayout>
+
+</LinearLayout>
