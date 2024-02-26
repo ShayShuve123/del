@@ -1,6 +1,10 @@
 package com.example.myfragapp.classes;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +12,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myfragapp.R;
-
 import java.util.ArrayList;
+
 
 public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyViewHolder> {
 
@@ -22,16 +25,30 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
 
     ArrayList<Ingredient> filteredList; //filtered list for the recycler view
 
-    ArrayList<Ingredient> clientList; //list for the recycler view that introduce just what the client chose
+    private ClientsData clientsData;//***nwe
+
+    private Context context;
+
+    Clients currentClient;
 
 
-    //pass the arr from the main
-    public CustomerAdapter(ArrayList<Ingredient> dataset) {
-        this.dataset = dataset;
-        this.filteredList = new ArrayList<>(dataset);
-    }
+
+    //pass the arr from the main//old
+//    public CustomerAdapter(ArrayList<Ingredient> dataset) {
+//        this.dataset = dataset;
+//        this.filteredList = new ArrayList<>(dataset);
+//    }
 
     //
+    public CustomerAdapter(ArrayList<Ingredient> dataset, ClientsData clientsData, Context context) {
+        this.dataset = dataset;
+        this.filteredList = new ArrayList<>(dataset);
+
+        this.clientsData = clientsData;
+        this.context = context;
+    }
+
+
     @SuppressLint("NotifyDataSetChanged")
     public void filterList(ArrayList<Ingredient> filteredList) {
         this.filteredList = filteredList;
@@ -51,6 +68,10 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
         Button btnMinus;
         Button btnAdd;
 
+        Button btnLogOut;//delete button1
+        //TextView textClientUsername;
+
+
 
 
 
@@ -66,6 +87,10 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
             btnPlus = itemView.findViewById(R.id.btnPlus);
             btnMinus=itemView.findViewById(R.id.btnMinus);
             btnAdd=itemView.findViewById(R.id.btnAdd);
+
+            btnLogOut=itemView.findViewById(R.id.btnLogOut);
+
+            //textClientUsername=itemView.findViewById(R.id.textViewClientUsername);
 
         }
 
@@ -83,6 +108,7 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull CustomerAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {//in the back have a loop for the object[i]==position,paas all the arr
 
+
         // Ensure position is within the bounds of the filteredList
         Ingredient currentItem = filteredList.get(position);//for the searching
         //print all what in arr
@@ -90,7 +116,6 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
         holder.textIngredientPrice.setText(String.valueOf(currentItem.getIngredientPrice()));
         holder.IngredientImage.setImageResource(currentItem.getIngredientImage());
         holder.textIngredientAmount.setText(String.valueOf(currentItem.getIngredientAmount()));
-        //holder.textIngredientAmount.setText(currentItem.getIngredientAmount());
 
         // Adding click listener to the itemView for a specific Ingredient
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -127,15 +152,34 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //her i need to add the ingrisiant to the bag of the clint to this arr  private ArrayList<Ingredient> ingredients; //To add the ingredients per each client ,
-               //i need to know which clint get in and then Clients.cuurnt client.ingredients.add(currentItem)
-               //COMLICATED but the idai is to pass her just the name of the user and then to sherch whit the funcshin find users
+                // Here you can use getContext() to get the context of the current fragment or activity
+                SharedPreferences sharedPref = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                String username = sharedPref.getString("username", "");
+
+                Toast.makeText(context, username+"try to add: "+currentItem.getIngredientName()+".", Toast.LENGTH_SHORT).show();
+
+                // Here you can perform actions based on the current client's username
+                // For example, you can add the currentItem to the client's bag
+                currentClient = ClientsData.getInstance().findUserByUsername(username);//we not find the client****
+                if (currentClient != null) {
+                    currentClient.addIngredient(dataset.get(position));
+                    Toast.makeText(context, currentItem.getIngredientName()+" added", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // Handle the case where the current client is not found
+                    Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
 
-
-
+//        holder.btnLogOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
     }

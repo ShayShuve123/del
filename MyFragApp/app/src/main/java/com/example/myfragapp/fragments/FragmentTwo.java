@@ -1,5 +1,7 @@
 package com.example.myfragapp.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -87,13 +89,15 @@ public class FragmentTwo extends Fragment {
                     Toast.makeText(getContext(), " Sign up failed, try again...", Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(view).navigate(R.id.action_fragmentTwo_to_mainFragment);
                 } else {
-                    //save the user name and foreword him to fragment 3 for the current user to do action on his bag//me by to delete
-                    //pass and introduce in fregment 3 and then the c.A will take the txt from the text view
-                    Bundle bundle = new Bundle();
-                    bundle.putString("username",username);
+                    //save the username in the cache and pass the username to the recycle view and then to the adapter
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username);
+                    editor.apply();
+                    //end
 
                     // User exists and password is correct, navigate to FragmentThree
-                     Navigation.findNavController(view).navigate(R.id.action_fragmentTwo_to_fragmentThree,bundle);
+                     Navigation.findNavController(view).navigate(R.id.action_fragmentTwo_to_fragmentThree);
 
                 }
 

@@ -1,6 +1,8 @@
 package com.example.myfragapp.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myfragapp.R;
+import com.example.myfragapp.classes.Clients;
+import com.example.myfragapp.classes.ClientsData;
 import com.example.myfragapp.classes.CustomerAdapter;
 import com.example.myfragapp.classes.Ingredient;
 
@@ -78,7 +82,10 @@ public class FragmentThree extends Fragment {
     //will give the ability of the recyclerView to move from up to down
     private LinearLayoutManager linearLayoutManager ;
     private CustomerAdapter adapter;
+    private ClientsData clientsData;
 
+
+    //add the option of searching
     private void filter(String text) {
         ArrayList<Ingredient> filteredList = new ArrayList<>();
         for (Ingredient item : dataset) {
@@ -89,6 +96,7 @@ public class FragmentThree extends Fragment {
         adapter.filterList(filteredList); // Update adapter with filtered list
     }
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,21 +104,12 @@ public class FragmentThree extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_three, container, false);
 
-        //i will paas like that the username and then will take him from the adapter//not sure
-        String username = getArguments().getString("username");
-        TextView textViewClientUsername=view.findViewById(R.id.textViewClientUsername);
-        if(username!=null)
-        {
-            textViewClientUsername.setText(username);
-        }
-
         //the connection to the recycle view
         recyclerView = view.findViewById(R.id.resView1); //find the recyclerView for using  //view.
         searchEditText = view.findViewById(R.id.editTextSearch);//find the searchText(id:editTextText) for using
 
         dataset=new ArrayList<>();
         linearLayoutManager= new LinearLayoutManager(getContext()); //will give the ability of the recyclerView to move from up to down
-
 
         recyclerView.setLayoutManager(linearLayoutManager);//set recyclerView to move from up to down
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -122,11 +121,14 @@ public class FragmentThree extends Fragment {
                     IngredientsData.ingredientImageArray[i]
             ) );
         }
+        clientsData = new ClientsData();
+        adapter = new CustomerAdapter(dataset, clientsData,getContext());
 
-        adapter=new CustomerAdapter(dataset);
+        //adapter=new CustomerAdapter(dataset);
+
         recyclerView.setAdapter(adapter);
-        //add the option of searching
 
+        recyclerView.setAdapter(adapter);
 
         // Set up TextWatcher for EditText
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -140,11 +142,12 @@ public class FragmentThree extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString()); // Call filter method when text changes
+                filter(s.toString()); 
             }
         });
 
         return view;
 
     }
+
 }

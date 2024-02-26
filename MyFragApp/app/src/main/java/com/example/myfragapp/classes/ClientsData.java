@@ -7,7 +7,7 @@ public class ClientsData {
 
     private ArrayList<Clients> clients;
 
-    private ClientsData() {
+    public ClientsData() {
         clients = new ArrayList<>();
     }
     //singleton pattern--> ClientsData.getInstance() to get the single instance of ClientsData and then add clients or access the list of clients.
