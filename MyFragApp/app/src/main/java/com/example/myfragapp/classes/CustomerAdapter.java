@@ -68,8 +68,7 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
         Button btnMinus;
         Button btnAdd;
 
-        Button btnLogOut;//delete button1
-        //TextView textClientUsername;
+
 
 
 
@@ -87,11 +86,6 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
             btnPlus = itemView.findViewById(R.id.btnPlus);
             btnMinus=itemView.findViewById(R.id.btnMinus);
             btnAdd=itemView.findViewById(R.id.btnAdd);
-
-            btnLogOut=itemView.findViewById(R.id.btnLogOut);
-
-            //textClientUsername=itemView.findViewById(R.id.textViewClientUsername);
-
         }
 
     }
@@ -172,15 +166,6 @@ public  class CustomerAdapter  extends RecyclerView.Adapter<CustomerAdapter.MyVi
 
             }
         });
-
-
-//        holder.btnLogOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
 
     }
 

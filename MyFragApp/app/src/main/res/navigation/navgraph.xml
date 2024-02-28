@@ -21,7 +21,11 @@
         android:id="@+id/fragmentThree"
         android:name="com.example.myfragapp.fragments.FragmentThree"
         android:label="fragment_three"
-        tools:layout="@layout/fragment_three" />
+        tools:layout="@layout/fragment_three" >
+        <action
+            android:id="@+id/action_fragmentThree_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentTwo"
         android:name="com.example.myfragapp.fragments.FragmentTwo"

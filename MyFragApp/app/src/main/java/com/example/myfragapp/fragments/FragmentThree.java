@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -143,6 +145,16 @@ public class FragmentThree extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 filter(s.toString()); 
+            }
+        });
+
+        //log out btn,Pass from main to SignUp fragment
+        Button btnLogOut= view.findViewById(R.id.btnLogOut);
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_fragmentThree_to_mainFragment);
+
             }
         });
 
