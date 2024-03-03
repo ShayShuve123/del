@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Shay App</string>
+    <style name="Base.Theme.ShayApp" parent="Theme.AppCompat.DayNight.NoActionBar">//let me design the app
+        
+        
+    </style>
+    <style name="Theme.ShayApp" parent="Base.Theme.ShayApp"/>
+</resources>
